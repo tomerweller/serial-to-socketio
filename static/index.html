@@ -6,7 +6,6 @@
 <body>
 <h1 id="text"></h1>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
 
     var socket = io();
@@ -43,7 +42,6 @@
         var R25 = 10000.0;
         var T = 1.0 / (Math.log(R / R25) / B + (1 / (25.0 + 273.15))) - 273.15;
         filter = (1 - eps) * filter + eps * T;
-//        $("#text").html(parseFloat(filter).toFixed(2) + "c");
         document.getElementById("text").innerHTML = parseFloat(filter).toFixed(2) + "c";
     }
 </script>
