@@ -16,8 +16,6 @@ The specific client used in this demo presents temperature readings from a board
 ```
 
 If everything is working you should be able to see temperature readings at [http://127.0.0.1:3000](http://127.0.0.1:3000).
-
-Inline-style: 
 ![Screenshot](screenshot.png)
 
 
