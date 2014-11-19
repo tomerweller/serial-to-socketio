@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <title>hello.temp.45</title>
+</head>
+<body>
+<h1 id="text">Nothing yet...</h1>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script>
+
+    var socket = io();
+    socket.on('data', function (msg) {
+        updateBuffer(msg)
+    });
+
+    /*
+     Implementation of Neil Gershenfeld's serial communication protocol from the the hello.temp.45 example.
+     Board:  http://academy.cba.mit.edu/classes/input_devices/temp/hello.temp.45.png
+     AVR code: http://academy.cba.mit.edu/classes/input_devices/temp/hello.temp.45.c
+     Original Python code: http://academy.cba.mit.edu/classes/input_devices/temp/hello.temp.45.py
+     */
+    var buffer = [0, 0, 0, 0, 0 , 0],
+            eps = 0.5,
+            filter = 0.0;
+
+    function updateBuffer(b) {
+        buffer.shift();
+        buffer.push(b);
+        if (buffer[0] == 1 && buffer[1] == 2 && buffer[2] == 3 && buffer[3] == 4) {
+            updateTemp(buffer[4], buffer[5]);
+//            console.log(buffer); //logging
+        }
+    }
+
+    function updateTemp(low, high) {
+        var value = 256 * high + low;
+        if (value > 511)
+            value -= 1024;
+        var V = 2.5 - value * 5.0 / (20.0 * 512.0);
+        var R = 10000.0 / (5.0 / V - 1.0);
+        var B = 3750.0;
+        var R25 = 10000.0;
+        var T = 1.0 / (Math.log(R / R25) / B + (1 / (25.0 + 273.15))) - 273.15;
+        filter = (1 - eps) * filter + eps * T;
+        document.getElementById("text").innerHTML = parseFloat(filter).toFixed(2) + "c";
+    }
+</script>
+</body>
+</html>

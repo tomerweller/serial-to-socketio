@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <title>hello.array.serial.44</title>
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <!--Random style so this looks reasonable on my tablet-->
+    <style>
+        body {
+            margin-top: 100px;
+            margin-right: auto; margin-left: auto; width: 200px}
+    </style>
+</head>
+<body>
+<h1 id="text"></h1>
+<!-- My board flashes one of six LEDs according to one of the characters a,b,c,d,e,f -->
+<button value="f">1</button>
+<button value="e">2</button>
+<button value="d">3</button>
+<button value="c">4</button>
+<button value="b">5</button>
+<button value="a">6</button>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+
+    var socket = io();
+    socket.on('data', function (msg) {
+        console.log("in", String.fromCharCode(msg)); //just an echo
+    });
+
+    $(function(){
+        console.log("ready");
+        $("button").click(function(obj){
+            var val = obj.target.value; // get the char value associated with this button
+            socket.emit('data', val);
+            console.log("pushed", val);
+        });
+    });
+
+</script>
+</body>
+</html>
