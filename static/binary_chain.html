@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Binarize!</h1>
-<input id="number" type="number" name="firstname">
+<input id="number" type="number" name="firstname" value=0>
 <!-- My board flashes one of six LEDs according to one of the characters a,b,c,d,e,f -->
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -17,14 +17,17 @@
         console.log("in", String.fromCharCode(msg)); //just an echo
     });
 
+    var update = function() {
+        val = parseInt($("#number").val());
+        chr = String.fromCharCode(val);
+        console.log("New input", val, chr);
+        socket.emit('data', chr);
+    };
+
     $(function(){
         console.log("ready");
-        $("#number").change(function(obj){
-            val = parseInt($("#number").val());
-            chr = String.fromCharCode(val);
-            console.log("New input", val, chr);
-            socket.emit('data', chr);
-        });
+        $("#number").change(update);
+        setInterval(update, 500);
     });
 
 </script>

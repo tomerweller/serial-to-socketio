@@ -22,7 +22,6 @@ http.listen(3000, function () {
 io.on('connection', function(socket){
     //relay socket.io writes to the serial port
     socket.on('data', function(data){
-        console.log("emitting " + data);
         serialConnection.write(data);
     });
 });
