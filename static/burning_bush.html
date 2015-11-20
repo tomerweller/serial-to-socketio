@@ -28,7 +28,6 @@
 
 
 <!--<input id="background-color" type="color" />-->
-<!-- My board flashes one of six LEDs according to one of the characters a,b,c,d,e,f -->
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
@@ -86,8 +85,6 @@
     }
 
     var update = function(hex) {
-//        console.log("bla");
-//        var hex = $("#background-color").val();
         var rgb = hexToRgb(hex);
         var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
         var hslNormalized = [hsl[0]*360, hsl[1]*100, hsl[2]*100];
