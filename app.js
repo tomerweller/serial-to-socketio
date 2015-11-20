@@ -15,10 +15,12 @@ app.get("/", function (req, res) {
     res.redirect('/index.html');
 });
 
+//start express
 http.listen(3000, function () {
     console.log('go to http://127.0.0.1:3000');
 });
 
+//initialize socketui connections
 io.on('connection', function(socket){
     //relay socket.io writes to the serial port
     socket.on('data', function(data){
@@ -26,9 +28,9 @@ io.on('connection', function(socket){
     });
 });
 
-//initialize serial connection
+//initialize serial connection with a single byte parser
 var serialConnection = new serialPort.SerialPort(process.argv[2], {
-    parser: serialPort.parsers.byteLength(1), //
+    parser: serialPort.parsers.byteLength(1),
     baudrate: 9600
 });
 
